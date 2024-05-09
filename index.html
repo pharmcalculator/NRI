@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nutritional Risk Index (NRI) Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input[type="number"] {
+            width: 200px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        input[type="text"] {
+            width: 200px;
+            padding: 5px;
+            margin-top: 10px;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .scale {
+            display: flex;
+            justify-content: space-between;
+            width: 200px;
+            margin-top: 10px;
+        }
+
+        .scale span {
+            font-size: 26px;
+       body {
+        font-size: 24px;   
+        }
+    </style>
+    <script>
+        function calculateNRI() {
+            var albumin = parseFloat(document.getElementById('albumin').value);
+            var currentWeight = parseFloat(document.getElementById('currentWeight').value);
+            var usualWeight = parseFloat(document.getElementById('usualWeight').value);
+            var nri;
+
+            nri = (1.519 * albumin) + (41.7 * (currentWeight / usualWeight));
+
+            document.getElementById('nriResult').value = nri.toFixed(2);
+
+            var scale = document.getElementById('nriScale');
+            var riskLevel = document.getElementById('riskLevel');
+
+            if (nri >= 97.5) {
+                scale.innerHTML = "No significant risk";
+                riskLevel.innerHTML = "Low";
+            } else if (nri >= 83.5 && nri < 97.5) {
+                scale.innerHTML = "Moderate risk of malnutrition";
+                riskLevel.innerHTML = "Moderate";
+            } else if (nri < 83.5) {
+                scale.innerHTML = "High risk of malnutrition";
+                riskLevel.innerHTML = "High";
+            } else {
+                scale.innerHTML = "";
+                riskLevel.innerHTML = "";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Nutritional Risk Index (NRI) Calculator</h2>
+    <form>
+        <label for="albumin">Albumin Level (g/L):</label>
+        <input type="number" id="albumin" placeholder="Enter albumin level">
+
+        <label for="currentWeight">Current Weight:</label>
+        <input type="number" id="currentWeight" placeholder="Enter current weight">
+
+        <label for="usualWeight">Usual Weight:</label>
+        <input type="number" id="usualWeight" placeholder="Enter usual weight">
+
+        <button onclick="calculateNRI()">Calculate NRI</button>
+
+        <label for="nriResult">NRI Result:</label>
+        <input type="text" id="nriResult" placeholder="Result" readonly>
+
+        <div class="scale">
+            <span>Scale:</span>
+            <span id="nriScale"></span>
+        </div>
+
+        <div class="scale">
+            <span>Risk Level:</span>
+            <span id="riskLevel"></span>
+        </div>
+    </form>
+</body>
+</html>
